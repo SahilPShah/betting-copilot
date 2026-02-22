@@ -1,7 +1,7 @@
 CREATE TABLE teams (
   team_id VARCHAR(10) PRIMARY KEY, -- e.g. 'CWS', 'CHC'
   full_name VARCHAR(100) NOT NULL,
-  league VARCHAR(4), -- 'American' | 'National'
+  division VARCHAR(20), -- 'American' | 'National'
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -105,3 +105,6 @@ CREATE TABLE recommendations (
 );
 CREATE INDEX idx_rec_game_id ON recommendations(game_id);
 CREATE INDEX idx_rec_slate ON recommendations(slate_run_id);
+
+ALTER TABLE games ADD COLUMN data_source VARCHAR(20) DEFAULT 'live';
+
