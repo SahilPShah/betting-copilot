@@ -55,14 +55,15 @@ CREATE TABLE team_stats_snapshots (
   stat_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   team_id VARCHAR(10) REFERENCES teams(team_id),
   as_of_date DATE NOT NULL,
-  starter_name VARCHAR(100),
-  starter_era NUMERIC(5,2),
-  starter_whip NUMERIC(5,3),
-  starter_k9 NUMERIC(5,2),
-  bullpen_era_l7 NUMERIC(5,2), -- bullpen ERA last 7 days
-  team_ops_l14 NUMERIC(6,3), -- team OPS last 14 games
-  team_era_l14 NUMERIC(5,2), -- team ERA last 14 games
-  captured_at TIMESTAMPTZ NOT NULL
+  team_pitching_era NUMERIC(5,2),
+  team_pitching_whip NUMERIC(5,3),
+  team_pitching_k9 NUMERIC(5,2),
+  team_ops_l14 NUMERIC(6,3), -- team OPS (season)
+  team_era_l14 NUMERIC(5,2), -- team ERA (season)
+  team_win_pct NUMERIC(5,3),
+  runs_scored_avg NUMERIC(5,2),
+  captured_at TIMESTAMPTZ NOT NULL,
+  UNIQUE(team_id, as_of_date)
 );
 CREATE INDEX idx_stats_team_date ON team_stats_snapshots(team_id, as_of_date);
 

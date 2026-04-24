@@ -4,13 +4,14 @@ from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
+from sklearn.calibration import CalibratedClassifierCV
 import os
 import sys
 import pickle
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from models.elo import run_elo
-from models.train import build_features, load_team_stats
+from models.train import build_features, load_team_stats, load_starter_stats
 
 load_dotenv("/Users/sahilshah/betting-copilot/.env")
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -21,7 +22,8 @@ CONFIDENCE_THRESHOLD = 5.0
 
 FEATURE_COLS = [
     'elo_diff', 'era_diff', 'whip_diff',
-    'k9_diff', 'ops_diff', 'win_pct_diff', 'runs_diff'
+    'k9_diff', 'ops_diff', 'win_pct_diff', 'runs_diff',
+    'starter_era_diff', 'starter_whip_diff', 'has_starter_data',
 ]
 
 # Time-series splits — train on past, predict on future only
@@ -60,12 +62,13 @@ def compute_confidence(edge, model_prob, elo_diff):
 
 
 def train_model(train_df):
-    """Train logistic regression on training seasons only."""
+    """Train calibrated logistic regression on training seasons only."""
     X = train_df[FEATURE_COLS].values
     y = train_df['home_won'].values
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
-    model = LogisticRegression(max_iter=1000, random_state=42)
+    base_model = LogisticRegression(max_iter=1000, random_state=42)
+    model = CalibratedClassifierCV(base_model, cv=5, method='isotonic')
     model.fit(X_scaled, y)
     return model, scaler
 
@@ -79,7 +82,8 @@ def run_clv_backtest():
     print("Loading ELO history and team stats...")
     _, history = run_elo(SEASONS, k=10, divisor=800)
     stats = load_team_stats()
-    all_features = build_features(history, stats)
+    starters = load_starter_stats()
+    all_features = build_features(history, stats, starters)
     print(f"  Total games with features: {len(all_features)}")
 
     print("Loading closing odds...")
@@ -113,17 +117,6 @@ def run_clv_backtest():
 
         # Merge with closing odds
         merged = test_df.merge(odds, on='game_id', how='inner')
-        # Add this debug block right after the merge in run_clv_backtest()
-        print("\nDebug sample — first 10 merged rows:")
-        print(merged[['game_id', 'home_team_id', 'away_team_id', 
-                    'model_prob', 'closing_implied_prob', 
-                    'closing_odds', 'home_won']].head(10).to_string())
-
-        print("\nModel prob distribution:")
-        print(merged['model_prob'].describe())
-
-        print("\nClosing prob distribution:")
-        print(merged['closing_implied_prob'].describe())
         print(f"    Games with closing odds: {len(merged)}")
 
         for _, row in merged.iterrows():

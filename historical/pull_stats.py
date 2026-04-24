@@ -44,7 +44,7 @@ def fetch_pitching(year):
 
 def upsert_stats(conn, row):
     conn.execute(text("""
-        INSERT INTO team_stats_snapshots (
+        INSERT INTO team_stats_mlb (
             team_id,
             as_of_date,
             team_pitching_era,
