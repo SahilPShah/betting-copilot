@@ -1,0 +1,66 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Python artifacts
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/*.egg-info
+**/*.egg
+.eggs/
+
+# Virtual environment — never goes in the image
+.venv
+venv
+env
+
+# Secrets — NEVER baked into the image
+.env
+*.env
+
+# Jupyter / notebooks
+*.ipynb
+.ipynb_checkpoints
+notes/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Shell scripts — not needed by the container
+capture_odds.sh
+refresh_stats.sh
+run_daily.sh
+
+# Docs and notes
+docs/
+README.md
+CLAUDE.md
+AGENTS.md
+betting_copilot.session.sql
+
+# Evaluation scripts — not needed in production API
+eval/
+
+# Historical one-time backfill scripts
+historical/
+
+# Model training — not needed in production
+models/train.py
+
+# Test files
+tests/
+conftest.py

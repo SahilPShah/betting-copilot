@@ -1,0 +1,59 @@
+# syntax=docker/dockerfile:1
+# Jobs image — Python scheduled ingestion job (ingest + predict + recommend)
+# Separate from Dockerfile (API/uvicorn) so the two images stay independent.
+
+##############################################################
+# Stage 1: Builder — compile C extensions
+##############################################################
+FROM python:3.12-slim AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc \
+        g++ \
+        libpq-dev \
+        libxml2-dev \
+        libxslt-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip \
+ && pip install --no-cache-dir --prefix=/install -r requirements.txt
+
+
+##############################################################
+# Stage 2: Runtime — no compilers, only what's needed to run
+##############################################################
+FROM python:3.12-slim AS runtime
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq5 \
+        libxml2 \
+        libxslt1.1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /install /usr/local
+
+RUN useradd --create-home --shell /bin/bash appuser
+
+WORKDIR /app
+
+# Copy only what the jobs pipeline needs — no api/, features/, eval/, etc.
+COPY ingest/       ./ingest/
+COPY models/       ./models/
+COPY recs/         ./recs/
+COPY llm/          ./llm/
+COPY db/           ./db/
+COPY scheduled_job.py .
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+# Default: full pipeline (ingest + predict + recommend).
+# Override at runtime with --ingest-only for the 9am morning job.
+# In production the container stays alive via `tail -f /dev/null`
+# and the Droplet cron drives execution via `docker exec`.
+CMD ["python", "scheduled_job.py"]

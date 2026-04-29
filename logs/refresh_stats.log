@@ -1,0 +1,108 @@
+
+========================================
+Odds capture started: 2026-04-25 09:01:16
+========================================
+Refreshing games in DB (2026-04-20 → 2026-04-25)...
+  Fetching schedule for 2026-04-20 → 2026-04-25...
+  78 games upserted (0 skipped), 78 with probable pitchers
+
+Fetching box scores (2026-04-20 → 2026-04-25)...
+  Fetching box scores for 2026-04-20 → 2026-04-25...
+  63 final games found
+  126 pitcher log rows upserted
+  126 batting log rows upserted
+
+Capturing morning odds for 2026-04-25...
+  Fetching live odds for 2026-04-25...
+  14 games from Odds API (requests remaining: 19928)
+  56 odds rows inserted, 0 games not matched in DB
+
+Updating team stats for 2026-04-25...
+  Fetching team stats for 2026 from Baseball Reference (as of 2026-04-25)...
+    Batting 2026 — 30 teams
+    Pitching 2026 — 30 teams
+  30 season stat rows upserted for 2026
+  31 L7 stat rows upserted for 2026-04-25
+
+Odds capture complete: 2026-04-25 09:12:47
+
+========================================
+Odds capture started: 2026-04-27 09:00:04
+========================================
+Refreshing games in DB (2026-04-22 → 2026-04-27)...
+  Fetching schedule for 2026-04-22 → 2026-04-27...
+  77 games upserted (0 skipped), 77 with probable pitchers
+
+Fetching box scores (2026-04-22 → 2026-04-27)...
+  Fetching box scores for 2026-04-22 → 2026-04-27...
+  68 final games found
+  136 pitcher log rows upserted
+  136 batting log rows upserted
+
+Capturing morning odds for 2026-04-27...
+  Fetching live odds for 2026-04-27...
+  8 games from Odds API (requests remaining: 19926)
+  32 odds rows inserted, 0 games not matched in DB
+
+Updating team stats for 2026-04-27...
+  Fetching team stats for 2026 from Baseball Reference (as of 2026-04-27)...
+    Batting 2026 — 30 teams
+    Pitching 2026 — 30 teams
+  30 season stat rows upserted for 2026
+  31 L7 stat rows upserted for 2026-04-27
+
+Odds capture complete: 2026-04-27 09:00:38
+
+========================================
+Odds capture started: 2026-04-28 09:02:01
+========================================
+Refreshing games in DB (2026-04-23 → 2026-04-28)...
+  Fetching schedule for 2026-04-23 → 2026-04-28...
+  77 games upserted (0 skipped), 77 with probable pitchers
+
+Fetching box scores (2026-04-23 → 2026-04-28)...
+  Fetching box scores for 2026-04-23 → 2026-04-28...
+  61 final games found
+  122 pitcher log rows upserted
+  122 batting log rows upserted
+
+Capturing morning odds for 2026-04-28...
+  Fetching live odds for 2026-04-28...
+  15 games from Odds API (requests remaining: 19922)
+  60 odds rows inserted, 0 games not matched in DB
+
+Updating team stats for 2026-04-28...
+  Fetching team stats for 2026 from Baseball Reference (as of 2026-04-28)...
+    Batting 2026 — 30 teams
+    Pitching 2026 — 30 teams
+  30 season stat rows upserted for 2026
+  31 L7 stat rows upserted for 2026-04-28
+
+Odds capture complete: 2026-04-28 09:26:07
+
+========================================
+Odds capture started: 2026-04-29 09:00:12
+========================================
+Refreshing games in DB (2026-04-24 → 2026-04-29)...
+  Fetching schedule for 2026-04-24 → 2026-04-29...
+  83 games upserted (0 skipped), 83 with probable pitchers
+
+Fetching box scores (2026-04-24 → 2026-04-29)...
+  Fetching box scores for 2026-04-24 → 2026-04-29...
+  67 final games found
+  134 pitcher log rows upserted
+  134 batting log rows upserted
+
+Capturing morning odds for 2026-04-29...
+  Fetching live odds for 2026-04-29...
+  15 games from Odds API (requests remaining: 19912)
+  60 odds rows inserted, 0 games not matched in DB
+
+Updating team stats for 2026-04-29...
+  Fetching team stats for 2026 from Baseball Reference (as of 2026-04-29)...
+    Batting 2026 — 30 teams
+    Pitching 2026 — 30 teams
+  30 season stat rows upserted for 2026
+  31 L7 stat rows upserted for 2026-04-29
+
+Odds capture complete: 2026-04-29 09:03:06

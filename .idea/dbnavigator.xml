@@ -4,6 +4,15 @@
     <mappings />
     <preferences />
   </component>
+  <component name="DBNavigator.Project.DatabaseAssistantManager">
+    <assistants />
+    <selection-state>
+      <model-selection />
+    </selection-state>
+  </component>
+  <component name="DBNavigator.Project.DatabaseFileManager">
+    <open-files />
+  </component>
   <component name="DBNavigator.Project.Settings">
     <connections />
     <browser-settings>
